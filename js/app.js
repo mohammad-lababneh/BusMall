@@ -6,6 +6,7 @@ let goats = [];
 let busMallNames =[];
 let busMallClicks =[];
 let busMallViews =[];
+let checkImg = [];
 
 function BusMall(busName) {
     // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
@@ -33,11 +34,8 @@ for (let i = 0; i < BusMallImg.length; i++) {
 }
 
 function generateImage() {
-    //0-1 >> 0-7
     return Math.floor(Math.random() * goats.length);
 }
-// console.log(goats);
-// generateImage();
 
 let lImgEl = document.getElementById('leftImg');
 let mImgEl = document.getElementById('middleImg');
@@ -51,9 +49,21 @@ function renderImg() {
     rightImgIndex = generateImage();
     middleImgIndex = generateImage();
 
-    while( (leftImgIndex === rightImgIndex) || (middleImgIndex === rightImgIndex) ||  (middleImgIndex === leftImgIndex)){
+    console.log(checkImg);
+
+    while( leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex ||  middleImgIndex === leftImgIndex || checkImg[0] === rightImgIndex || checkImg[1] === rightImgIndex || checkImg[2] === rightImgIndex 
+        || checkImg[0] === leftImgIndex || checkImg[1] === leftImgIndex || checkImg[2] === leftImgIndex
+        || checkImg[0] === middleImgIndex || checkImg[1] === middleImgIndex || checkImg[2] === middleImgIndex
+        ) {
         leftImgIndex = generateImage();
+        rightImgIndex = generateImage();
+        middleImgIndex = generateImage();
+
     }
+
+    checkImg = [leftImgIndex ,rightImgIndex ,middleImgIndex ];
+
+
 
     lImgEl.setAttribute('src', goats[leftImgIndex].source);
     lImgEl.setAttribute('title', goats[leftImgIndex].source);
@@ -68,9 +78,8 @@ function renderImg() {
     mImgEl.setAttribute('title', goats[middleImgIndex].source);
     goats[middleImgIndex].views++;
 
-    // console.log('left', leftImgIndex)
-    // console.log('right', rightImgIndex);
 }
+
 renderImg();
 
 lImgEl.addEventListener('click', handelClicks);
