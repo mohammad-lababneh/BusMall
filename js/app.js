@@ -2,19 +2,15 @@
 let attempts = 0;
 let maxAttempts = 25;
 let attemptsEl = document.getElementById('attempts');
-let goats = [];
+let bussArray = [];
 function BusMall(busName) {
-    // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
+
     this.busName = busName.split('.')[0];
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
-    goats.push(this);
+    bussArray.push(this);
 }
-
-// let goat1 = new BusMall('cruisin-goat', 'images/cruisin-goat.jpg');
-// let goat2 = new BusMall('float-your-goat.jpg', 'images/float-your-goat.jpg');
-
 
 let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
     'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
@@ -27,11 +23,10 @@ for (let i = 0; i < BusMallImg.length; i++) {
 }
 
 function generateImage() {
-    //0-1 >> 0-7
-    return Math.floor(Math.random() * goats.length);
+    
+    return Math.floor(Math.random() * bussArray.length);
 }
-// console.log(goats);
-// generateImage();
+
 
 let lImgEl = document.getElementById('leftImg');
 let mImgEl = document.getElementById('middleImg');
@@ -52,21 +47,20 @@ function renderImg() {
 
     }
 
-    lImgEl.setAttribute('src', goats[leftImgIndex].source);
-    lImgEl.setAttribute('title', goats[leftImgIndex].source);
-    goats[leftImgIndex].views++;
+    lImgEl.setAttribute('src', bussArray[leftImgIndex].source);
+    lImgEl.setAttribute('title', bussArray[leftImgIndex].source);
+    bussArray[leftImgIndex].views++;
 
-    rImgEl.setAttribute('src', goats[rightImgIndex].source);
-    rImgEl.setAttribute('title', goats[rightImgIndex].source);
-    goats[rightImgIndex].views++;
+    rImgEl.setAttribute('src', bussArray[rightImgIndex].source);
+    rImgEl.setAttribute('title', bussArray[rightImgIndex].source);
+    bussArray[rightImgIndex].views++;
     attemptsEl.textContent = attempts;
 
-    mImgEl.setAttribute('src', goats[middleImgIndex].source);
-    mImgEl.setAttribute('title', goats[middleImgIndex].source);
-    goats[middleImgIndex].views++;
+    mImgEl.setAttribute('src', bussArray[middleImgIndex].source);
+    mImgEl.setAttribute('title', bussArray[middleImgIndex].source);
+    bussArray[middleImgIndex].views++;
 
-    // console.log('left', leftImgIndex)
-    // console.log('right', rightImgIndex);
+
 }
 renderImg();
 
@@ -79,12 +73,12 @@ function handelClicks(event) {
     if (attempts <= maxAttempts) {
         console.log(event.target.id)
         if (event.target.id === 'leftImg') {
-            goats[leftImgIndex].clicks++;
+            bussArray[leftImgIndex].clicks++;
         } else if (event.target.id === 'rightImg') {
-            goats[rightImgIndex].clicks++;
+            bussArray[rightImgIndex].clicks++;
         }
         else if (event.target.id === 'middleImg') {
-            goats[middleImgIndex].clicks++;
+            bussArray[middleImgIndex].clicks++;
         }
 
         renderImg();
@@ -103,10 +97,10 @@ function buttonListener (){
 
  let ulEl = document.getElementById('results');
         let liEl;
-        for (let i = 0; i < goats.length; i++) {
+        for (let i = 0; i < bussArray.length; i++) {
             liEl = document.createElement('li');
             ulEl.appendChild(liEl);
-            liEl.textContent = `${goats[i].busName} has ${goats[i].views} views and has ${goats[i].clicks} clicks.`
+            liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
         }
 
     button.removeEventListener('click',buttonListener);

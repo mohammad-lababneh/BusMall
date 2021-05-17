@@ -1,10 +1,18 @@
 * {
+  margin-left: 20px;
     box-sizing: border-box;
   }
-  h1 {
+  h2 {
+    margin-top: 20px;
     text-align: center;
   }
+  p{
+    margin-top: 20px;
+    text-align: center;
+    color: brown;
+  }
   img {
+    margin-top: 10px;
     display: block;
     width: 150px;
     float: left;
@@ -13,8 +21,8 @@
   }
   #image-container {
     padding-left: 120px;
-    border: 2px solid black;
-    width: 800px;
+    border: 2px solid rgb(175, 10, 10);
+    width: 700px;
     margin: 0 auto;
     height: 175px;
   }
@@ -22,7 +30,6 @@
   #rightImg,
   #middleImg {
     width: 150px;
-    /* margin: 10px; */
      display: block;
     margin: 0 auto;
     border-radius: 10px; 
