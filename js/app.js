@@ -3,12 +3,18 @@ let attempts = 0;
 let maxAttempts =25;
 let attemptsEl = document.getElementById('attempts');
 let goats = [];
+let busMallNames =[];
+let busMallClicks =[];
+let busMallViews =[];
+
 function BusMall(busName) {
     // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
     this.busName = busName.split('.')[0]; // where is the busName valus
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
+    busMallNames.push(this.busName);
+    
     goats.push(this);
 }
 
@@ -92,9 +98,56 @@ function handelClicks(event) {
             liEl = document.createElement('li');
             ulEl.appendChild(liEl);
             liEl.textContent = `${goats[i].busName} has ${goats[i].views} views and has ${goats[i].clicks} clicks.`
+             busMallClicks.push(goats[i].clicks)
+            busMallViews.push(goats[i].views);
+        
         }
         lImgEl.removeEventListener('click', handelClicks);
         rImgEl.removeEventListener('click', handelClicks);
         mImgEl.removeEventListener('click', handelClicks);
+        chartRender();
     }
+}
+
+function  chartRender() {
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: busMallNames,
+        datasets: [{
+            label: '# of clicks',
+            data:  busMallClicks,
+            backgroundColor: [
+                
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        },{
+            label: '# of views',
+            data:  busMallViews,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+               
+            ],
+            borderWidth: 1
+        } ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
 }
