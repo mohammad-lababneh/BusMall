@@ -1,11 +1,11 @@
 'use strict';
 let attempts = 0;
-let maxAttempts =25;
+let maxAttempts = 25;
 let attemptsEl = document.getElementById('attempts');
 let goats = [];
 function BusMall(busName) {
     // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
-    this.busName = busName.split('.')[0]; 
+    this.busName = busName.split('.')[0];
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
@@ -45,7 +45,7 @@ function renderImg() {
     rightImgIndex = generateImage();
     middleImgIndex = generateImage();
 
-    while( (leftImgIndex === rightImgIndex) || (middleImgIndex === rightImgIndex) ||  (middleImgIndex === leftImgIndex)){
+    while ((leftImgIndex === rightImgIndex) || (middleImgIndex === rightImgIndex) || (middleImgIndex === leftImgIndex)) {
         leftImgIndex = generateImage();
         rightImgIndex = generateImage();
         middleImgIndex = generateImage();
@@ -88,16 +88,26 @@ function handelClicks(event) {
         }
 
         renderImg();
-     }else {
-        let ulEl = document.getElementById('results');
+    } else {
+       
+        lImgEl.removeEventListener('click', handelClicks);
+        rImgEl.removeEventListener('click', handelClicks);
+        mImgEl.removeEventListener('click', handelClicks);
+    }
+}
+
+let button = document.getElementById('button');
+button.addEventListener('click', buttonListener);
+
+function buttonListener (){
+
+ let ulEl = document.getElementById('results');
         let liEl;
         for (let i = 0; i < goats.length; i++) {
             liEl = document.createElement('li');
             ulEl.appendChild(liEl);
             liEl.textContent = `${goats[i].busName} has ${goats[i].views} views and has ${goats[i].clicks} clicks.`
         }
-        lImgEl.removeEventListener('click', handelClicks);
-        rImgEl.removeEventListener('click', handelClicks);
-        mImgEl.removeEventListener('click', handelClicks);
-    }
+
+    button.removeEventListener('click',buttonListener);
 }
