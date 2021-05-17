@@ -13,7 +13,7 @@
   }
   #image-container {
     padding-left: 120px;
-    border: 2px solid black;
+    border: 2px solid rgb(81, 221, 16);
     width: 800px;
     margin: 0 auto;
     height: 175px;
@@ -22,13 +22,13 @@
   #rightImg,
   #middleImg {
     width: 150px;
-    /* margin: 10px; */
      display: block;
     margin: 0 auto;
     border-radius: 10px; 
    margin-right: 10px;
   }
   span {
+    text-align: center;
     margin-left: 50px;
   }
   #attempts {

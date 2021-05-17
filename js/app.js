@@ -1,27 +1,23 @@
 'use strict';
 let attempts = 0;
-let maxAttempts =25;
+let maxAttempts = 25;
 let attemptsEl = document.getElementById('attempts');
-let goats = [];
-let busMallNames =[];
-let busMallClicks =[];
-let busMallViews =[];
+let bussArray = [];
+let busMallNames = [];
+let busMallClicks = [];
+let busMallViews = [];
 let checkImg = [];
 
 function BusMall(busName) {
-    // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
-    this.busName = busName.split('.')[0]; // where is the busName valus
+
+    this.busName = busName.split('.')[0];
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
     busMallNames.push(this.busName);
-    
-    goats.push(this);
+
+    bussArray.push(this);
 }
-
-// let goat1 = new BusMall('cruisin-goat', 'images/cruisin-goat.jpg');
-// let goat2 = new BusMall('float-your-goat.jpg', 'images/float-your-goat.jpg');
-
 
 let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
     'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
@@ -34,7 +30,7 @@ for (let i = 0; i < BusMallImg.length; i++) {
 }
 
 function generateImage() {
-    return Math.floor(Math.random() * goats.length);
+    return Math.floor(Math.random() * bussArray.length);
 }
 
 let lImgEl = document.getElementById('leftImg');
@@ -51,32 +47,32 @@ function renderImg() {
 
     console.log(checkImg);
 
-    while( leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex ||  middleImgIndex === leftImgIndex || checkImg[0] === rightImgIndex || checkImg[1] === rightImgIndex || checkImg[2] === rightImgIndex 
+    while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex || middleImgIndex === leftImgIndex || checkImg[0] === rightImgIndex || checkImg[1] === rightImgIndex || checkImg[2] === rightImgIndex
         || checkImg[0] === leftImgIndex || checkImg[1] === leftImgIndex || checkImg[2] === leftImgIndex
         || checkImg[0] === middleImgIndex || checkImg[1] === middleImgIndex || checkImg[2] === middleImgIndex
-        ) {
+    ) {
         leftImgIndex = generateImage();
         rightImgIndex = generateImage();
         middleImgIndex = generateImage();
 
     }
 
-    checkImg = [leftImgIndex ,rightImgIndex ,middleImgIndex ];
+    checkImg = [leftImgIndex, rightImgIndex, middleImgIndex];
 
 
 
-    lImgEl.setAttribute('src', goats[leftImgIndex].source);
-    lImgEl.setAttribute('title', goats[leftImgIndex].source);
-    goats[leftImgIndex].views++;
+    lImgEl.setAttribute('src', bussArray[leftImgIndex].source);
+    lImgEl.setAttribute('title', bussArray[leftImgIndex].source);
+    bussArray[leftImgIndex].views++;
 
-    rImgEl.setAttribute('src', goats[rightImgIndex].source);
-    rImgEl.setAttribute('title', goats[rightImgIndex].source);
-    goats[rightImgIndex].views++;
+    rImgEl.setAttribute('src', bussArray[rightImgIndex].source);
+    rImgEl.setAttribute('title', bussArray[rightImgIndex].source);
+    bussArray[rightImgIndex].views++;
     attemptsEl.textContent = attempts;
 
-    mImgEl.setAttribute('src', goats[middleImgIndex].source);
-    mImgEl.setAttribute('title', goats[middleImgIndex].source);
-    goats[middleImgIndex].views++;
+    mImgEl.setAttribute('src', bussArray[middleImgIndex].source);
+    mImgEl.setAttribute('title', bussArray[middleImgIndex].source);
+    bussArray[middleImgIndex].views++;
 
 }
 
@@ -91,25 +87,25 @@ function handelClicks(event) {
     if (attempts <= maxAttempts) {
         console.log(event.target.id)
         if (event.target.id === 'leftImg') {
-            goats[leftImgIndex].clicks++;
+            bussArray[leftImgIndex].clicks++;
         } else if (event.target.id === 'rightImg') {
-            goats[rightImgIndex].clicks++;
+            bussArray[rightImgIndex].clicks++;
         }
         else if (event.target.id === 'middleImg') {
-            goats[middleImgIndex].clicks++;
+            bussArray[middleImgIndex].clicks++;
         }
 
         renderImg();
-     }else {
-        let ulEl = document.getElementById('results');
-        let liEl;
-        for (let i = 0; i < goats.length; i++) {
-            liEl = document.createElement('li');
-            ulEl.appendChild(liEl);
-            liEl.textContent = `${goats[i].busName} has ${goats[i].views} views and has ${goats[i].clicks} clicks.`
-             busMallClicks.push(goats[i].clicks)
-            busMallViews.push(goats[i].views);
-        
+    } else {
+        // let ulEl = document.getElementById('results');
+        // let liEl;
+        for (let i = 0; i < bussArray.length; i++) {
+            // liEl = document.createElement('li');
+            // ulEl.appendChild(liEl);
+            // liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
+            busMallClicks.push(bussArray[i].clicks)
+            busMallViews.push(bussArray[i].views);
+
         }
         lImgEl.removeEventListener('click', handelClicks);
         rImgEl.removeEventListener('click', handelClicks);
@@ -118,45 +114,65 @@ function handelClicks(event) {
     }
 }
 
-function  chartRender() {
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: busMallNames,
-        datasets: [{
-            label: '# of clicks',
-            data:  busMallClicks,
-            backgroundColor: [
-                
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        },{
-            label: '# of views',
-            data:  busMallViews,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-               
-            ],
-            borderWidth: 1
-        } ]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+/////////////////////////////////////////////////////////////////////////////////////////
+let button = document.getElementById('button');
+button.addEventListener('click', buttonListener);
+
+function buttonListener (){
+
+ let ulEl = document.getElementById('results');
+        let liEl;
+        for (let i = 0; i < bussArray.length; i++) {
+            liEl = document.createElement('li');
+            ulEl.appendChild(liEl);
+            liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
+        }
+
+    button.removeEventListener('click',buttonListener);
+}
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function chartRender() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: busMallNames,
+            datasets: [{
+                label: '# of clicks',
+                data: busMallClicks,
+                backgroundColor: [
+
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }, {
+                label: '# of views',
+                data: busMallViews,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
+    });
 
 }
