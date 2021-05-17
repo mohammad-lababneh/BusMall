@@ -5,7 +5,7 @@ let attemptsEl = document.getElementById('attempts');
 let goats = [];
 function BusMall(busName) {
     // 'cruisin-goat.jpg'.split('.') >> ['cruisin-goat', 'jpg']
-    this.busName = busName.split('.')[0]; // where is the busName valus
+    this.busName = busName.split('.')[0]; 
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
@@ -47,6 +47,9 @@ function renderImg() {
 
     while( (leftImgIndex === rightImgIndex) || (middleImgIndex === rightImgIndex) ||  (middleImgIndex === leftImgIndex)){
         leftImgIndex = generateImage();
+        rightImgIndex = generateImage();
+        middleImgIndex = generateImage();
+
     }
 
     lImgEl.setAttribute('src', goats[leftImgIndex].source);
