@@ -15,7 +15,6 @@ function BusMall(busName) {
     this.clicks = 0;
     this.views = 0;
     busMallNames.push(this.busName);
-
     bussArray.push(this);
 }
 
@@ -47,10 +46,10 @@ function renderImg() {
 
     console.log(checkImg);
 
-    while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex || middleImgIndex === leftImgIndex || checkImg[0] === rightImgIndex || checkImg[1] === rightImgIndex || checkImg[2] === rightImgIndex
-        || checkImg[0] === leftImgIndex || checkImg[1] === leftImgIndex || checkImg[2] === leftImgIndex
-        || checkImg[0] === middleImgIndex || checkImg[1] === middleImgIndex || checkImg[2] === middleImgIndex
-    ) {
+    while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex 
+        || middleImgIndex === leftImgIndex 
+        || checkImg.includes(leftImgIndex ) || checkImg.includes(rightImgIndex ) || checkImg.includes(middleImgIndex ))
+        {
         leftImgIndex = generateImage();
         rightImgIndex = generateImage();
         middleImgIndex = generateImage();
@@ -103,7 +102,7 @@ function handelClicks(event) {
             // liEl = document.createElement('li');
             // ulEl.appendChild(liEl);
             // liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
-            busMallClicks.push(bussArray[i].clicks)
+            busMallClicks.push(bussArray[i].clicks);
             busMallViews.push(bussArray[i].views);
 
         }
@@ -115,6 +114,7 @@ function handelClicks(event) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
 let button = document.getElementById('button');
 button.addEventListener('click', buttonListener);
 
@@ -130,7 +130,8 @@ function buttonListener (){
 
     button.removeEventListener('click',buttonListener);
 }
-/////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 
 
