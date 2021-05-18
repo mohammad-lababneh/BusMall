@@ -7,7 +7,11 @@ let busMallNames = [];
 let busMallClicks = [];
 let busMallViews = [];
 let checkImg = [];
-
+///
+// const orderForm = document.getElementById('orderForm');
+// const orders = document.getElementById('results');
+// BusMall.drinks = [];
+///
 function BusMall(busName) {
 
     this.busName = busName.split('.')[0];
@@ -16,7 +20,14 @@ function BusMall(busName) {
     this.views = 0;
     busMallNames.push(this.busName);
     bussArray.push(this);
+
+/////
+// BusMall.drinks.push(this);
+// setting ();
+/////
 }
+
+
 
 let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
     'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
@@ -27,6 +38,21 @@ let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
 for (let i = 0; i < BusMallImg.length; i++) {
     new BusMall(BusMallImg[i]);
 }
+////////////////////    / //////////  /
+
+// function setting (){
+// let data = JSON.stringify(BusMall.drinks);
+// console.log(data);
+// localStorage.setItem('name',data);
+// }
+// setting ();
+// function gettingItems(){
+//     let stringOob = localStorage.getItem('name');
+//     let normalObj = JSON.parse(stringOob)
+//    BusMall.drinks  = normalObj ;
+// }
+
+//////////////////    / ////////////  /
 
 function generateImage() {
     return Math.floor(Math.random() * bussArray.length);
@@ -44,7 +70,7 @@ function renderImg() {
     rightImgIndex = generateImage();
     middleImgIndex = generateImage();
 
-    console.log(checkImg);
+    // console.log(checkImg);
 
     while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex 
         || middleImgIndex === leftImgIndex 
@@ -113,7 +139,7 @@ function handelClicks(event) {
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+
 
 let button = document.getElementById('button');
 button.addEventListener('click', buttonListener);
@@ -131,7 +157,6 @@ function buttonListener (){
     button.removeEventListener('click',buttonListener);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
 
 
 
