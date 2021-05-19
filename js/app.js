@@ -7,11 +7,24 @@ let busMallNames = [];
 let busMallClicks = [];
 let busMallViews = [];
 let checkImg = [];
-///
-// const orderForm = document.getElementById('orderForm');
-// const orders = document.getElementById('results');
-// BusMall.drinks = [];
-///
+
+let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
+    'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
+    'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg',
+    'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg',
+    'wine-glass.jpg'];
+
+let lImgEl = document.getElementById('leftImg');
+let mImgEl = document.getElementById('middleImg');
+let rImgEl = document.getElementById('rightImg');
+
+let leftImgIndex;
+let rightImgIndex;
+let middleImgIndex;
+
+
+
+
 function BusMall(busName) {
 
     this.busName = busName.split('.')[0];
@@ -21,61 +34,52 @@ function BusMall(busName) {
     busMallNames.push(this.busName);
     bussArray.push(this);
 
-/////
-// BusMall.drinks.push(this);
-// setting ();
-/////
 }
 
 
 
-let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
-    'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
-    'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg',
-    'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg',
-    'wine-glass.jpg'];
+
 
 for (let i = 0; i < BusMallImg.length; i++) {
     new BusMall(BusMallImg[i]);
 }
-////////////////////    / //////////  /
 
-// function setting (){
-// let data = JSON.stringify(BusMall.drinks);
-// console.log(data);
-// localStorage.setItem('name',data);
-// }
-// setting ();
-// function gettingItems(){
-//     let stringOob = localStorage.getItem('name');
-//     let normalObj = JSON.parse(stringOob)
-//    BusMall.drinks  = normalObj ;
-// }
-
-//////////////////    / ////////////  /
 
 function generateImage() {
     return Math.floor(Math.random() * bussArray.length);
 }
 
+function settingImg (){
+    let objectData = JSON.stringify(bussArray);
+    localStorage.setItem('key',objectData);
 
-let lImgEl = document.getElementById('leftImg');
-let mImgEl = document.getElementById('middleImg');
-let rImgEl = document.getElementById('rightImg');
 
-let leftImgIndex;
-let rightImgIndex;
-let middleImgIndex;
+}
+function gettingItems(){
+let gettingObj = localStorage.getItem('key')
+console.log(gettingObj);
+let normalObj = JSON.parse(gettingObj);
+if (normalObj !== null){
+    bussArray = normalObj
+
+}
+renderImg();
+}
+gettingItems();
+
+
+
+
 function renderImg() {
     leftImgIndex = generateImage();
     rightImgIndex = generateImage();
     middleImgIndex = generateImage();
 
-    // console.log(checkImg);
-
+ 
     while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex 
         || middleImgIndex === leftImgIndex 
-        || checkImg.includes(leftImgIndex ) || checkImg.includes(rightImgIndex ) || checkImg.includes(middleImgIndex ))
+        || checkImg.includes(leftImgIndex ) || checkImg.includes(rightImgIndex )
+         || checkImg.includes(middleImgIndex ))
         {
         leftImgIndex = generateImage();
         rightImgIndex = generateImage();
@@ -94,11 +98,14 @@ function renderImg() {
     rImgEl.setAttribute('src', bussArray[rightImgIndex].source);
     rImgEl.setAttribute('title', bussArray[rightImgIndex].source);
     bussArray[rightImgIndex].views++;
-    attemptsEl.textContent = attempts;
+  
 
     mImgEl.setAttribute('src', bussArray[middleImgIndex].source);
     mImgEl.setAttribute('title', bussArray[middleImgIndex].source);
+   
     bussArray[middleImgIndex].views++;
+    attemptsEl.textContent = attempts;
+
 
 }
 
@@ -123,27 +130,46 @@ function handelClicks(event) {
 
         renderImg();
     } else {
+        lImgEl.removeEventListener('click', handelClicks);
+        rImgEl.removeEventListener('click', handelClicks);
+        mImgEl.removeEventListener('click', handelClicks);
+
+        let button = document.getElementById('button');
+        settingImg ();
+        button.addEventListener('click', buttonListener);
+
         // let ulEl = document.getElementById('results');
+
         // let liEl;
+        // for (let i = 0; i < bussArray.length; i++) {
+        //     liEl = document.createElement('li');
+        //     ulEl.appendChild(liEl);
+        //     liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
+       
+        //     busMallClicks.push(bussArray[i].clicks);
+        //     busMallViews.push(bussArray[i].views);
+
+        // }
+
+
         for (let i = 0; i < bussArray.length; i++) {
-            // liEl = document.createElement('li');
-            // ulEl.appendChild(liEl);
-            // liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
+            liEl = document.createElement('li');
+            ulEl.appendChild(liEl);
+            liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
             busMallClicks.push(bussArray[i].clicks);
             busMallViews.push(bussArray[i].views);
 
         }
-        lImgEl.removeEventListener('click', handelClicks);
-        rImgEl.removeEventListener('click', handelClicks);
-        mImgEl.removeEventListener('click', handelClicks);
+     
         chartRender();
+        button.removeEventListener('click',buttonListener);
     }
 }
 
 
 
-let button = document.getElementById('button');
-button.addEventListener('click', buttonListener);
+
+
 
 function buttonListener (){
 
@@ -153,9 +179,11 @@ function buttonListener (){
             liEl = document.createElement('li');
             ulEl.appendChild(liEl);
             liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
+             busMallClicks.push(bussArray[i].clicks);
+            busMallViews.push(bussArray[i].views);
         }
 
-    button.removeEventListener('click',buttonListener);
+  
 }
 
 
