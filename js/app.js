@@ -58,6 +58,7 @@ function generateImage() {
     return Math.floor(Math.random() * bussArray.length);
 }
 
+
 let lImgEl = document.getElementById('leftImg');
 let mImgEl = document.getElementById('middleImg');
 let rImgEl = document.getElementById('rightImg');
