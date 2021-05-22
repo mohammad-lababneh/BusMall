@@ -4,7 +4,7 @@ let maxAttempts = 25;
 let attemptsEl = document.getElementById('attempts');
 let bussArray = [];
 let busMallNames = [];
-let busMallClicks = [];
+let busMallClicks = []; 
 let busMallViews = [];
 let checkImg = [];
 
@@ -12,7 +12,7 @@ let BusMallImg = ['bag.jpg', 'banana.jpg', 'bathroom.jpg',
     'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg',
     'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg',
     'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg',
-    'wine-glass.jpg'];
+    'wine-glass.jpg']; // products name
 
 let lImgEl = document.getElementById('leftImg');
 let mImgEl = document.getElementById('middleImg');
@@ -27,7 +27,7 @@ let middleImgIndex;
 
 function BusMall(busName) {
 
-    this.busName = busName.split('.')[0];
+    this.busName = busName.split('.')[0]; // give the names 
     this.source = 'img/' + busName;
     this.clicks = 0;
     this.views = 0;
@@ -45,19 +45,22 @@ for (let i = 0; i < BusMallImg.length; i++) {
 }
 
 
-function generateImage() {
+function generateImage() // function responseble to generate images 
+ {
     return Math.floor(Math.random() * bussArray.length);
 }
 
-function settingImg (){
+function settingImg () // responseble for converting object to string 
+{
     let objectData = JSON.stringify(bussArray);
     localStorage.setItem('key',objectData);
 
 
 }
-function gettingItems(){
+function gettingItems() // responseble for converting string to object
+{
 let gettingObj = localStorage.getItem('key')
-console.log(gettingObj);
+// console.log(gettingObj);
 let normalObj = JSON.parse(gettingObj);
 if (normalObj !== null){
     bussArray = normalObj
@@ -76,7 +79,8 @@ function renderImg() {
     middleImgIndex = generateImage();
 
  
-    while (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex 
+    while // while loop to make deferant photos
+     (leftImgIndex === rightImgIndex || middleImgIndex === rightImgIndex 
         || middleImgIndex === leftImgIndex 
         || checkImg.includes(leftImgIndex ) || checkImg.includes(rightImgIndex )
          || checkImg.includes(middleImgIndex ))
@@ -138,20 +142,6 @@ function handelClicks(event) {
         settingImg ();
         button.addEventListener('click', buttonListener);
 
-        // let ulEl = document.getElementById('results');
-
-        // let liEl;
-        // for (let i = 0; i < bussArray.length; i++) {
-        //     liEl = document.createElement('li');
-        //     ulEl.appendChild(liEl);
-        //     liEl.textContent = `${bussArray[i].busName} has ${bussArray[i].views} views and has ${bussArray[i].clicks} clicks.`
-       
-        //     busMallClicks.push(bussArray[i].clicks);
-        //     busMallViews.push(bussArray[i].views);
-
-        // }
-
-
         for (let i = 0; i < bussArray.length; i++) {
             liEl = document.createElement('li');
             ulEl.appendChild(liEl);
@@ -165,11 +155,6 @@ function handelClicks(event) {
         button.removeEventListener('click',buttonListener);
     }
 }
-
-
-
-
-
 
 function buttonListener (){
 
@@ -185,9 +170,6 @@ function buttonListener (){
 
   
 }
-
-
-
 
 function chartRender() {
     var ctx = document.getElementById('myChart').getContext('2d');
